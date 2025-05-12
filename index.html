@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Welcome!</title>
+  <style>
+   /* Reset and base styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #FFFFFF; /* sebelumnya #000000 */
+    color: #000000; /* sebelumnya #FFFFFF */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  a {
+    color: #00BFFF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    cursor: pointer;
+  }
+  a:hover,
+  a:focus {
+    color: #FFD700;
+    outline: none;
+  }
+  
+  /* Header */
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.85); /* sebelumnya rgba(0,0,0,0.85) */
+    backdrop-filter: saturate(180%) blur(12px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* ubah bayangan jadi lebih terang */
+  }
+  header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    user-select: none;
+    color: #000000; /* sebelumnya putih */
+    margin: 0;
+  }
+  nav {
+    display: flex;
+    gap: 2rem;
+  }
+  nav a {
+    font-weight: 600;
+    font-size: 1rem;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background: #00BFFF;
+    transition: width 0.3s ease;
+    border-radius: 2px;
+  }
+  nav a:hover::after,
+  nav a:focus::after {
+    width: 100%;
+  }
+  
+  /* Hamburger menu */
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 28px;
+    height: 22px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+  }
+  .menu-toggle:focus {
+    outline: 2px solid #00BFFF;
+    outline-offset: 2px;
+  }
+  .menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background: #00BFFF;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: 1px;
+  }
+  .menu-toggle.open span:nth-child(1) {
+    transform: rotate(45deg);
+  }
+  .menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.open span:nth-child(3) {
+    transform: rotate(-45deg);
+  }
+  
+  /* Mobile nav */
+  @media (max-width: 768px) {
+    nav {
+      position: fixed;
+      top: 64px;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95); /* sebelumnya hitam */
+      height: calc(100vh - 64px);
+      width: 220px;
+      flex-direction: column;
+      padding: 2rem 1.5rem;
+      gap: 1.5rem;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      box-shadow: -4px 0 12px rgba(0,0,0,0.1);
+    }
+    nav.open {
+      transform: translateX(0);
+    }
+    .menu-toggle {
+      display: flex;
+    }
+  }
+  
+  /* Main content */
+  main {
+    margin-top: 80px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1rem 2rem 3rem;
+    flex-grow: 1;
+  }
+  section {
+    background: rgba(0, 0, 0, 0.05); /* sebelumnya putih transparan */
+    border-radius: 14px;
+    padding: 2.5rem 2rem;
+    margin-bottom: 3.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1.2rem;
+    border-bottom: 3px solid #00BFFF;
+    padding-bottom: 0.4rem;
+    user-select: none;
+    color: #000000; /* sebelumnya putih */
+  }
+  
+  /* Projects */
+  .projects-list {
+    list-style: none;
+    padding-left: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.8rem;
+  }
+  .project-item {
+    background: rgba(0, 191, 255, 0.12);
+    border-radius: 12px;
+    padding: 1.2rem 1.8rem;
+    box-shadow: 0 6px 20px rgba(0,191,255,0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+  .project-item:hover,
+  .project-item:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 36px rgba(0,191,255,0.65);
+    outline: none;
+  }
+  .project-item h3 {
+    margin-bottom: 0.6rem;
+    font-size: 1.4rem;
+    color: #00BFFF;
+  }
+  .project-item p {
+    font-size: 1.05rem;
+    color: #003366; /* sebelumnya #D0EFFF, diganti ke biru gelap agar kontras di background putih */
+    line-height: 1.5;
+  }
+  
+  /* Skills */
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    justify-content: center;
+  }
+  .skill {
+    background: #00BFFF;
+    color: #FFFFFF; /* sebelumnya #001F3F, diganti putih agar kontras */
+    font-weight: 700;
+    padding: 0.7rem 1.4rem;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0,191,255,0.55);
+    user-select: none;
+    font-size: 1.1rem;
+    transition: background 0.3s ease;
+    cursor: default;
+  }
+  .skill:hover,
+  .skill:focus {
+    background: #FFD700;
+    color: #000000; /* hitam agar kontras */
+    outline: none;
+  }
+  
+  /* Favorite Band */
+  .band-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2.5rem;
+    justify-content: center;
+  }
+  .band-image {
+    flex: 1 1 280px;
+    max-width: 280px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,191,255,0.5);
+    object-fit: cover;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 6px #00BFFF);
+    transition: transform 0.4s ease;
+    cursor: default;
+  }
+  .band-image:hover,
+  .band-image:focus {
+    transform: scale(1.07) rotate(2deg);
+    outline: none;
+  }
+  .band-info {
+    flex: 2 1 320px;
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #003366; /* sebelumnya #D0EFFF, diganti biru gelap */
+    user-select: text;
+  }
+  
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 1.2rem 0;
+    background: rgba(255, 255, 255, 0.9); /* sebelumnya gelap */
+    color: #00BFFF;
+    font-size: 1rem;
+    user-select: none;
+    box-shadow: inset 0 1px 0 rgba(0,0,0,0.1);
+    font-weight: 600;
+  }
+  
+  /* Scroll reveal animation */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Noor Rizky Permana</h1>
+    <button class="menu-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primary-navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav id="primary-navigation" role="navigation">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#favorite-band">Favorite Band</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="projects" tabindex="0" class="reveal">
+      <h2>Recent Projects</h2>
+      <ul class="projects-list" role="list">
+        <li class="project-item" tabindex="0">
+          <h3>Windows Server Administration</h3>
+          <p>Integrating Windows Server into the Enterprise.</p>
+        </li>
+        <li class="project-item" tabindex="0">
+          <h3>VPS Automation with Docker</h3>
+          <p>An automatic Virtual Private Server maker from just one host server.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section id="skills" tabindex="0" class="reveal">
+      <h2>Skills</h2>
+      <div class="skills-list" role="list">
+          <span class="skill" role="listitem" tabindex="0">PHP ft. Laravel</span>
+          <span class="skill" role="listitem" tabindex="0">Docker & Kubernetes</span>
+          <span class="skill" role="listitem" tabindex="0">Javascript ft. NodeJS</span>
+          <span class="skill" role="listitem" tabindex="0">Windows Server Administration</span>
+          <span class="skill" role="listitem" tabindex="0">Network Configuration(Mikrotik)</span>
+
+      </div>
+    </section>
+
+    <section id="favorite-band" tabindex="0" class="reveal">
+      <h2>Favorite Band</h2>
+      <div class="band-container">
+        <img
+          src="https://a.storyblok.com/f/178900/960x540/74b4297d75/cr_bocchi_hero.png/m/filters:quality(95)format(webp)"
+          alt="Kessoku band photo"
+          class="band-image"
+          loading="lazy"
+          tabindex="0"
+        />
+        <div class="band-info">
+          <p><strong>(結束バンド Kessoku Bando)</strong> is the main unit band of Bocchi the Rock! series. The name "Kessoku Band" is a pun on "Kessoku" (unity) and "Kessoku Band" (cable tie). The band has been drawn as the center of this work.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Noor Rizky Permana. All rights reserved.
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.getElementById('primary-navigation');
+
+    menuToggle.addEventListener('click', () => {
+      const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+      menuToggle.setAttribute('aria-expanded', !expanded);
+      menuToggle.classList.toggle('open');
+      nav.classList.toggle('open');
+    });
+
+    // Close mobile menu on nav link click
+    nav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        // Close menu if open (mobile)
+        if (nav.classList.contains('open')) {
+          nav.classList.remove('open');
+          menuToggle.classList.remove('open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // Scroll reveal animation using Intersection Observer
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const observerOptions = {
+      threshold: 0.1
+    };
+
+    const revealOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    revealElements.forEach(el => {
+      revealOnScroll.observe(el);
+    });
+  </script>
+</body>
+</html>
