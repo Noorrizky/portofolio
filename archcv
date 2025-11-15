@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noor "norizna" - CV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* --- Global Styles --- */
+:root {
+    --bg-color: #111827;
+    --card-color: rgba(255, 255, 255, 0.05);
+    --primary-text: #F9FAFB;
+    --secondary-text: #9CA3AF;
+    --accent-color: #38BDF8; /* Light Blue */
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--primary-text);
+    padding: 2rem;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 1.5rem 0;
+}
+
+/* --- Main Card --- */
+.card {
+    width: 100%;
+    max-width: 600px;
+    background: var(--card-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    text-align: center;
+    
+    /* Glassmorphism Effect */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* Shadow */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* --- Header --- */
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--primary-text);
+}
+
+.codename {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.25rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.expertise {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: var(--secondary-text);
+}
+
+.typing-text {
+    font-weight: 600;
+    color: var(--accent-color);
+    font-family: 'Roboto Mono', monospace;
+}
+
+/* Blinking cursor effect */
+.typing-text::after {
+    content: '|';
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* --- Contact Links --- */
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.contact-links a {
+    font-size: 1.75rem;
+    color: var(--secondary-text);
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-links a:hover {
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+/* --- Content Sections --- */
+.content-section {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.content-section:last-child {
+    margin-bottom: 0; /* Remove extra space at the end */
+}
+
+.content-section h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-text);
+    margin-bottom: 0.75rem;
+    border-left: 3px solid var(--accent-color);
+    padding-left: 0.5rem;
+}
+
+.content-section p {
+    font-size: 0.95rem;
+    color: var(--secondary-text);
+    line-height: 1.6;
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+}
+
+.project-item {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.project-item:hover {
+    border-color: var(--accent-color);
+    color: var(--primary-text);
+}
+
+/* --- START: NEW STYLES FOR WORK & EDUCATION --- */
+.item {
+    margin-bottom: 1rem; /* Space between items, if you add more */
+}
+
+.item h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-text);
+    margin-bottom: 0.25rem;
+}
+
+.item-subhead {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.item-detail {
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+    font-weight: 300;
+}
+
+.item-list {
+    list-style-position: outside;
+    padding-left: 1.25rem; /* Indent bullet points */
+    color: var(--secondary-text);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.item-list li {
+    margin-bottom: 0.5rem;
+}
+
+.item-list li:last-child {
+    margin-bottom: 0;
+}
+/* --- END: NEW STYLES --- */
+
+    </style>
+</head>
+<body>
+
+    <main class="card">
+        <header>
+            <h1>Noor</h1>
+            <h2 class="codename">[norizna]</h2>
+            <h3 class="expertise">
+                I'm a <span class="typing-text"></span>
+            </h3>
+        </header>
+
+        <section class="contact-links">
+            <a href="mailto:noorrizkypermana@gmail.com" title="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/noor-rizky-permana-965969269/" target="_blank" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/Noorrizky" target="_blank" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+        </section>
+
+        <hr>
+
+        <section class="content-section">
+            <h4>About Me</h4>
+            <p>Detail-oriented Informatics Engineering student with a certification in web development and hands-
+on experience as an IT Staff Intern. Proficient in PHP, Linux, system administration, and maintaining
+network stability. Proven ability to manage data systems and support key company projects
+effectively.</p>
+        </section>
+        
+        <section class="content-section">
+            <h4>Work Experience</h4>
+            <div class="item">
+                <h5>[Your Job Title]</h5> <p class="item-subhead">[Company Name] | [Dates, e.g., 2024 - Present]</p> <ul class="item-list">
+                    <li>Developed a custom internal application to enhance the company's operational efficiency.</li>
+                    <li>Managed computer data and systems, including data tabulation, maintenance, and retrieval to support project needs.</li>
+                    <li>Maintained daily internet network stability and provided standby technical support for key company events.</li>
+                </ul>
+            </div>
+            </section>
+        <section class="content-section">
+            <h4>Education</h4>
+            <div class="item">
+                <h5>Diploma of Informatics Engineering</h5>
+                <p class="item-subhead">Banjarmasin State Polytechnic | 2022 - 2025</p>
+                <p class="item-detail">GPA: 3.74</p>
+            </div>
+        </section>
+        </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    
+    const typingText = document.querySelector(".typing-text");
+    
+    // Your list of expertise
+    const expertiseList = [
+        "IT Guy",
+        "System Administrator",
+        "Php'er"
+    ];
+    
+    let listIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function type() {
+        const currentWord = expertiseList[listIndex];
+        
+        // Check if deleting or typing
+        if (isDeleting) {
+            // Remove character
+            typingText.textContent = currentWord.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            // Add character
+            typingText.textContent = currentWord.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        // Determine typing speed
+        let typeSpeed = 150;
+        if (isDeleting) {
+            typeSpeed /= 2; // Faster when deleting
+        }
+
+        // If word is fully typed
+        if (!isDeleting && charIndex === currentWord.length) {
+            typeSpeed = 2000; // Pause at end of word
+            isDeleting = true;
+        } 
+        // If word is fully deleted
+        else if (isDeleting && charIndex === 0) {
+            typeSpeed = 500; // Pause before new word
+            isDeleting = false;
+            listIndex = (listIndex + 1) % expertiseList.length; // Move to next word
+        }
+
+        setTimeout(type, typeSpeed);
+    }
+
+    // Start the animation
+    type();
+});
+    </script>
+</body>
+</html>
