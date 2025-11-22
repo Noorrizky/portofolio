@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noor Rizky Permana - Professional Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* --- Theme Variables --- */
+        :root {
+            --bg-dark: #020617;       /* Slate 950 */
+            --card-bg: rgba(15, 23, 42, 0.6); /* Slate 900 transparent */
+            --text-main: #f8fafc;     /* Slate 50 */
+            --text-muted: #94a3b8;    /* Slate 400 */
+            --accent: #0ea5e9;        /* Sky 500 */
+            --accent-glow: rgba(14, 165, 233, 0.15);
+            --border: rgba(148, 163, 184, 0.1);
+            --success: #10b981;       /* Emerald 500 */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+            
+            /* Modern Grid Background Pattern */
+            background-image: 
+                linear-gradient(var(--border) 1px, transparent 1px), 
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* --- Main Container --- */
+        .resume-card {
+            width: 100%;
+            max-width: 800px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 3.5rem;
+            position: relative;
+            overflow: hidden;
+            
+            /* Premium Blur Effect */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            
+            /* Fade In Animation */
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Top colored line for style */
+        .resume-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        /* --- Header Section --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .profile-info h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            color: var(--text-main);
+        }
+
+        .role-title {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .role-title::before {
+            content: '>';
+            color: var(--text-muted);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--success);
+            animation: pulse 2s infinite;
+        }
+
+        /* Header Actions (Socials + CTA) */
+        .header-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 1rem;
+        }
+
+        .social-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            transition: all 0.2s;
+        }
+
+        .social-link:hover {
+            color: var(--text-main);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--text-main);
+            color: var(--bg-dark);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        /* --- Grid Layout for Content --- */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* 2/3 for experience, 1/3 for skills */
+            gap: 3rem;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* --- Experience Cards --- */
+        .exp-item {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .exp-item h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .exp-company {
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .exp-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .exp-list {
+            list-style: none;
+        }
+
+        .exp-list li {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        /* --- Skills Column --- */
+        .skill-group {
+            margin-bottom: 2rem;
+        }
+
+        .skill-group h5 {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .tags-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.35rem 0.75rem;
+            background: var(--border);
+            color: var(--text-muted);
+            border-radius: 6px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            color: var(--accent);
+            border-color: rgba(14, 165, 233, 0.3);
+            background: var(--accent-glow);
+        }
+
+        /* --- Education --- */
+        .edu-card {
+            background: rgba(255,255,255, 0.02);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        /* --- Typing Cursor --- */
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1rem;
+            background: var(--accent);
+            margin-left: 4px;
+            animation: blink 1s infinite;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* --- Mobile Response --- */
+        @media (max-width: 768px) {
+            .resume-card { padding: 2rem; }
+            .main-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .header-actions { align-items: flex-start; margin-top: 1rem; }
+            .profile-info h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="resume-card">
+        
+        <header>
+            <div class="profile-info">
+                <h1>Noor Rizky Permana</h1>
+                <div class="role-title">
+                    <span class="typing-text"></span><span class="cursor"></span>
+                </div>
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    Open to Work
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <div class="social-row">
+                    <a href="mailto:noorrizkypermana@gmail.com" class="social-link" title="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://www.linkedin.com/in/noor-rizky-permana-965969269/" class="social-link" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/Noorrizky" class="social-link" title="GitHub"><i class="fab fa-github"></i></a>
+                </div>
+                <a href="#" class="btn-primary" onclick="alert('This would trigger a PDF download in a real environment.')">
+                    <i class="fas fa-download"></i> Download CV
+                </a>
+            </div>
+        </header>
+
+        <div class="main-grid">
+            
+            <div class="left-col">
+                <div class="section-title"><i class="fas fa-user"></i> Professional Profile</div>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                    Detail-oriented Informatics Engineering student specializing in <b>System Administration</b> and <b>Backend Development</b>. 
+                    Experienced in building internal tools for operational efficiency and managing Linux-based infrastructure. 
+                    Seeking to leverage skills in PHP, Linux, and Network Management in a challenging professional environment.
+                </p>
+
+                <div class="section-title"><i class="fas fa-briefcase"></i> Experience</div>
+                
+                <div class="exp-item">
+                    <h4>IT Support Intern</h4>
+                    <div class="exp-company">PT. Saraswanti Indoland Development Tbk</div>
+                    <span class="exp-date">Sep 2024 - Jan 2025</span>
+                    <ul class="exp-list">
+                        <li>Engineered a custom web application to digitize and streamline internal data entry, reducing manual processing time.</li>
+                        <li>Orchestrated data tabulation and backup strategies to ensure 100% data availability for project stakeholders.</li>
+                        <li>Provided critical technical support and network monitoring during high-priority corporate events.</li>
+                    </ul>
+                </div>
+                
+                <div class="section-title"><i class="fas fa-graduation-cap"></i> Education</div>
+                <div class="exp-item" style="border: none; padding-bottom: 0;">
+                    <h4>Diploma of Informatics Engineering</h4>
+                    <div class="exp-company">Banjarmasin State Polytechnic</div>
+                    <span class="exp-date">2022 - Present</span>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Cumulative GPA: <strong style="color: var(--text-main);">3.74 / 4.00</strong></p>
+                </div>
+            </div>
+
+            <div class="right-col">
+                <div class="section-title"><i class="fas fa-code"></i> Tech Stack</div>
+
+                <div class="skill-group">
+                    <h5>Core Systems</h5>
+                    <div class="tags-wrapper">
+                        <span class="tag">Linux (Arch)</span>
+                        <span class="tag">Debian</span>
+                        <span class="tag">Bash</span>
+                        <span class="tag">Systemd</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <h5>Development</h5>
+                    <div class="tags-wrapper">
+                        <span class="tag">PHP 8+</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">HTML5/CSS3</span>
+                        <span class="tag">Git</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="skill-group">
+                    <h5>Networking</h5>
+                    <div class="tags-wrapper">
+                        <span class="tag">Cisco Packet Tracer</span>
+                        <span class="tag">MikroTik</span>
+                        <span class="tag">DNS Mgmt</span>
+                        <span class="tag">Apache2</span>
+                    </div>
+                </div>
+
+                <div class="edu-card" style="margin-top: 2rem;">
+                    <h5 style="font-size: 0.9rem; margin-bottom: 0.5rem;">Focus Areas</h5>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">
+                        Operational Stability, Backend Logic, Server Optimization, Data Integrity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const textElement = document.querySelector(".typing-text");
+        const roles = ["System Administrator", "Backend Developer", "Linux Enthusiast", "IT Specialist"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+            
+            if (isDeleting) {
+                textElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let speed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                speed = 2000; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                speed = 500;
+            }
+
+            setTimeout(typeEffect, speed);
+        }
+
+        document.addEventListener("DOMContentLoaded", typeEffect);
+    </script>
+</body>
+</html>
