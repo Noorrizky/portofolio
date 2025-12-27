@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NRP // SPECIFICATION_SHEET_V1.4</title>
+    <title>NRP // SPECIFICATION_SHEET</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,9 +27,10 @@
                         highlight: '#ccff00', 
                     },
                     animation: {
-                        'marquee': 'marquee 25s linear infinite',
+                        'marquee': 'marquee 25s linear infinite', /* Sedikit diperlambat karena teks bertambah */
                         'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'slide-down-menu': 'slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'loader': 'loader 2s ease-in-out forwards',
+                        'blink': 'blink 1s step-end infinite',
                     },
                     keyframes: {
                         marquee: {
@@ -37,8 +38,16 @@
                             '100%': { transform: 'translateX(-100%)' },
                         },
                         slideUp: {
-                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '0%': { opacity: 0, transform: 'translateY(40px)' },
                             '100%': { opacity: 1, transform: 'translateY(0)' },
+                        },
+                        loader: {
+                            '0%': { width: '0%' },
+                            '100%': { width: '100%' },
+                        },
+                        blink: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: 0 },
                         }
                     }
                 }
@@ -63,22 +72,50 @@
         .spec-card:hover { background-color: #f8fafc; }
         .spec-card:hover .view-btn { background-color: #000; color: #ccff00; }
 
-        /* Animation Delays for Staggered Load */
+        /* Splash Screen Transition */
+        #splash-screen {
+            transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1);
+        }
+        .splash-hidden {
+            transform: translateY(-100%);
+        }
+        
+        /* Prevent scroll when splash is active */
+        body.loading { overflow: hidden; }
+
+        /* Animation Classes */
+        .opacity-0-start { opacity: 0; }
         .delay-100 { animation-delay: 100ms; }
         .delay-200 { animation-delay: 200ms; }
         .delay-300 { animation-delay: 300ms; }
         .delay-400 { animation-delay: 400ms; }
         .delay-500 { animation-delay: 500ms; }
-
-        /* Initial State for Animation */
-        .opacity-0-start { opacity: 0; }
     </style>
 </head>
-<body class="bg-paper text-ink font-sans antialiased selection:bg-highlight selection:text-ink border-x border-ink min-h-screen max-w-[1400px] mx-auto box-border">
+<body class="bg-paper text-ink font-sans antialiased selection:bg-highlight selection:text-ink border-x border-ink min-h-screen max-w-[1400px] mx-auto box-border loading">
+
+    <div id="splash-screen" class="fixed inset-0 z-[100] bg-ink flex flex-col items-center justify-center text-white">
+        <div class="text-center w-full max-w-md px-6">
+            <h1 class="font-black text-4xl md:text-6xl tracking-tighter mb-2">WELCOME</h1>
+            <div class="flex justify-between items-center font-mono text-xs text-highlight mb-6">
+                <span>USER: GUEST</span>
+                <span>SYSTEM_READY</span>
+            </div>
+            
+            <div class="w-full h-1 bg-gray-800 relative overflow-hidden mb-2">
+                <div class="absolute inset-0 bg-highlight animate-loader"></div>
+            </div>
+            
+            <div class="flex justify-between font-mono text-[10px] text-gray-500">
+                <span>INITIALIZING...</span>
+                <span class="animate-blink">_</span>
+            </div>
+        </div>
+    </div>
 
     <nav class="sticky top-0 z-50 bg-paper border-b border-ink flex justify-between items-stretch h-14 transition-all duration-300">
         <div class="flex items-center px-4 md:px-6 border-r border-ink font-mono font-bold text-sm">
-            NRP_SYS_ADMIN
+            NRP_LAB
         </div>
         
         <div class="hidden md:flex flex-1 divide-x divide-ink">
@@ -107,7 +144,7 @@
 
     <main class="divide-y divide-ink">
 
-        <section id="intro" class="grid grid-cols-1 md:grid-cols-12 min-h-[80vh] divide-y md:divide-y-0 md:divide-x divide-ink opacity-0-start animate-slide-up delay-100">
+        <section id="intro" class="grid grid-cols-1 md:grid-cols-12 min-h-[80vh] divide-y md:divide-y-0 md:divide-x divide-ink opacity-0-start content-reveal">
             <div class="md:col-span-8 p-6 md:p-12 flex flex-col justify-between bg-technical relative">
                 <div class="font-mono text-xs mb-8">[ REF: IDN-2025 ]</div>
                 <div>
@@ -123,11 +160,11 @@
                         <i class="fas fa-bolt mr-2"></i> SysAdmin
                     </div>
                     <div class="border border-ink px-4 py-2 font-mono text-xs uppercase bg-white hover:bg-highlight transition-colors duration-300 cursor-default">
-                        <i class="fas fa-network-wired mr-2"></i> NetEng
+                        <i class="fas fa-network-wired mr-2"></i> DevOps
                     </div>
                 </div>
             </div>
-            <div class="md:col-span-4 flex flex-col divide-y divide-ink">
+            <div class="md:col-span-4 flex flex-col divide-y divide-ink opacity-0-start content-reveal delay-200">
                 <div class="flex-1 bg-gray-100 relative overflow-hidden group border-b border-ink">
                     <img src="https://lh3.googleusercontent.com/a/ACg8ocKQuNor1xYocVKwjHaGfnpxxgTwWqh1Jt9xfQ7HV4KVp8-9efHeGg=s288-c-no" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out" alt="Profile">
                     <div class="absolute bottom-0 left-0 bg-ink text-white px-3 py-1 font-mono text-xs">IMG_REF_01</div>
@@ -137,7 +174,7 @@
                     <ul class="font-mono text-xs space-y-3">
                         <li class="flex justify-between hover:bg-gray-50 p-1 transition-colors">
                             <span class="text-gray-500">PHASE:</span>
-                            <span class="font-bold bg-highlight px-1">BULKING</span>
+                            <span class="font-bold bg-highlight px-1">UPSKILLING</span>
                         </li>
                         <li class="flex justify-between hover:bg-gray-50 p-1 transition-colors">
                             <span class="text-gray-500">MAIN OS:</span>
@@ -145,7 +182,7 @@
                         </li>
                         <li class="flex justify-between hover:bg-gray-50 p-1 transition-colors">
                             <span class="text-gray-500">FOCUS:</span>
-                            <span class="font-bold">INFRASTRUCTURE</span>
+                            <span class="font-bold">System On Premise & Cloud</span>
                         </li>
                         <li class="flex justify-between hover:bg-gray-50 p-1 transition-colors">
                             <span class="text-gray-500">LOCATION:</span>
@@ -156,22 +193,22 @@
             </div>
         </section>
 
-        <div class="border-b border-ink bg-ink text-highlight overflow-hidden py-3 relative z-10 opacity-0-start animate-slide-up delay-200">
+        <div class="border-b border-ink bg-ink text-highlight overflow-hidden py-3 relative z-10 opacity-0-start content-reveal delay-300">
             <div class="flex whitespace-nowrap animate-marquee font-mono text-sm font-bold uppercase tracking-widest">
                 <span class="mx-6">/// SYSTEM_STATUS: ONLINE</span>
-                <span class="mx-6">/// ARCH_LINUX_KERNEL_6.6</span>
+                <span class="mx-6">/// CI_CD_PIPELINE_ACTIVE</span>
+                <span class="mx-6">/// DOCKER_CONTAINERIZED</span>
                 <span class="mx-6">/// AWS_CLOUD_CONNECTED</span>
-                <span class="mx-6">/// MIKROTIK_ROUTEROS_V7</span>
+                <span class="mx-6">/// ARCH_LINUX_KERNEL_6.6</span>
                 <span class="mx-6">/// UPTIME: 99.9%</span>
                 <span class="mx-6">/// SYSTEM_STATUS: ONLINE</span>
-                <span class="mx-6">/// ARCH_LINUX_KERNEL_6.6</span>
+                <span class="mx-6">/// CI_CD_PIPELINE_ACTIVE</span>
+                <span class="mx-6">/// DOCKER_CONTAINERIZED</span>
                 <span class="mx-6">/// AWS_CLOUD_CONNECTED</span>
-                <span class="mx-6">/// MIKROTIK_ROUTEROS_V7</span>
-                <span class="mx-6">/// UPTIME: 99.9%</span>
             </div>
         </div>
 
-        <section id="specs" class="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-ink opacity-0-start animate-slide-up delay-300">
+        <section id="specs" class="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-ink opacity-0-start content-reveal delay-400">
             <div class="md:col-span-3 p-6 bg-gray-50 border-r border-ink flex items-center justify-center">
                 <h2 class="text-4xl font-black uppercase tracking-tighter md:writing-vertical-rl">
                     Technical Specs
@@ -202,7 +239,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-4 group hover:bg-gray-50 transition-colors duration-300">
+                <div class="grid grid-cols-1 md:grid-cols-4 border-b border-ink group hover:bg-gray-50 transition-colors duration-300">
                     <div class="md:col-span-1 p-4 border-b md:border-b-0 md:border-r border-ink bg-gray-50 font-bold uppercase text-sm flex items-center">
                         03. Web Stack
                     </div>
@@ -213,10 +250,22 @@
                         <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> Git / Version Control</div>
                     </div>
                 </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 group hover:bg-gray-50 transition-colors duration-300">
+                    <div class="md:col-span-1 p-4 border-b md:border-b-0 md:border-r border-ink bg-gray-50 font-bold uppercase text-sm flex items-center">
+                        04. Cloud & DevOps
+                    </div>
+                    <div class="md:col-span-3 p-4 font-mono text-sm grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-highlight border border-ink"></span> AWS (EC2/ECR)</div>
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-highlight border border-ink"></span> Docker Container</div>
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-highlight border border-ink"></span> GitHub Actions (CI/CD)</div>
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> IAM Security</div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section id="experience" class="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-ink border-t border-ink opacity-0-start animate-slide-up delay-400">
+        <section id="experience" class="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-ink border-t border-ink opacity-0-start content-reveal delay-500">
             <div class="md:col-span-3 p-6 bg-gray-50 border-r border-ink flex items-center justify-center">
                 <h2 class="text-4xl font-black uppercase tracking-tighter md:writing-vertical-rl">
                     Operation Logs
@@ -256,12 +305,12 @@
             </div>
         </section>
 
-        <section id="projects" class="bg-gray-50 p-6 md:p-12 border-t border-ink opacity-0-start animate-slide-up delay-500">
+        <section id="projects" class="bg-gray-50 p-6 md:p-12 border-t border-ink opacity-0-start content-reveal delay-500">
             <div class="flex justify-between items-end mb-8 border-b border-ink pb-4">
                 <h2 class="text-4xl font-black uppercase tracking-tighter">Project Index</h2>
-                <span class="font-mono text-xs">[ TOTAL: 03 ]</span>
+                <span class="font-mono text-xs">[ TOTAL: 04 ]</span>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                     <div class="h-48 overflow-hidden border-b border-ink relative">
                         <img src="https://www.nakulasadewa.com/wp-content/uploads/2025/10/windows-server.jpg" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Windows Admin">
@@ -275,6 +324,7 @@
                         </p>
                     </div>
                 </article>
+
                 <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                     <div class="h-48 overflow-hidden border-b border-ink relative">
                         <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=2000&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Ubuntu HA">
@@ -288,6 +338,7 @@
                         </p>
                     </div>
                 </article>
+
                 <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
                     <div class="h-48 overflow-hidden border-b border-ink relative">
                         <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Hybrid Network">
@@ -298,6 +349,20 @@
                         <h3 class="text-xl font-bold uppercase leading-none mb-4">SOHO Network</h3>
                         <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
                             Designed and implemented a SOHO network using RouterOS, configuring DHCP, NAT, and Firewall Filters. 
+                        </p>
+                    </div>
+                </article>
+
+                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden border-b border-ink relative">
+                        <img src="https://static.vecteezy.com/system/resources/previews/024/694/423/non_2x/cloud-service-icon-on-white-vector.jpg" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="AWS CI/CD">
+                        <div class="absolute top-2 right-2 bg-highlight text-ink px-2 py-1 font-mono text-[10px] font-bold">NEW_ENTRY</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="font-mono text-xs text-gray-500 mb-2">ID: AWS_CICD_04</div>
+                        <h3 class="text-xl font-bold uppercase leading-none mb-4">Automated Cloud Deploy</h3>
+                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
+                            Orchestrated a fully automated CI/CD pipeline using GitHub Actions, pushing Docker images to AWS ECR and deploying to EC2.
                         </p>
                     </div>
                 </article>
@@ -331,6 +396,25 @@
     </main>
 
     <script>
+        // Splash Screen Logic
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash-screen');
+            const contentElements = document.querySelectorAll('.content-reveal');
+            
+            // Wait for 2.5 seconds (loading bar duration + buffer)
+            setTimeout(() => {
+                // 1. Slide up the splash screen
+                splash.classList.add('splash-hidden');
+                document.body.classList.remove('loading');
+
+                // 2. Trigger animations for main content with staggered delay
+                contentElements.forEach((el) => {
+                    el.classList.add('animate-slide-up');
+                });
+
+            }, 2200);
+        });
+
         // Mobile Menu Toggle Logic
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -342,33 +426,25 @@
             isMenuOpen = !isMenuOpen;
             
             if (isMenuOpen) {
-                // Open Menu
                 mobileMenu.classList.remove('-translate-y-[150%]');
-                mobileMenu.classList.add('translate-y-[60px]'); // Push down below navbar
-                
-                // Animate Icon
+                mobileMenu.classList.add('translate-y-[60px]'); 
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-times');
                 icon.classList.add('rotate-90');
             } else {
-                // Close Menu
                 mobileMenu.classList.add('-translate-y-[150%]');
                 mobileMenu.classList.remove('translate-y-[60px]');
-                
-                // Animate Icon
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
                 icon.classList.remove('rotate-90');
             }
         });
 
-        // Close menu when a link is clicked
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 isMenuOpen = false;
                 mobileMenu.classList.add('-translate-y-[150%]');
                 mobileMenu.classList.remove('translate-y-[60px]');
-                
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
                 icon.classList.remove('rotate-90');
