@@ -152,7 +152,7 @@
                         Noor Rizky<br>Permana
                     </h1>
                     <p class="text-xl md:text-2xl font-medium max-w-xl leading-tight border-l-4 border-ink pl-6">
-                        Constructing reliable hybrid infrastructure & automated server environments.
+                        Constructing reliable hybrid infrastructure, website applications & automated server environments.
                     </p>
                 </div>
                 <div class="mt-12 flex gap-4">
@@ -308,7 +308,7 @@
         <section id="projects" class="bg-gray-50 p-6 md:p-12 border-t border-ink opacity-0-start content-reveal delay-500">
             <div class="flex justify-between items-end mb-8 border-b border-ink pb-4">
                 <h2 class="text-4xl font-black uppercase tracking-tighter">Project Index</h2>
-                <span class="font-mono text-xs">[ TOTAL: 04 ]</span>
+                <span class="font-mono text-xs">[ TOTAL: 06 ]</span>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
@@ -366,6 +366,65 @@
                         </p>
                     </div>
                 </article>
+            </div>
+            </div>
+            <!--  -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden border-b border-ink relative">
+                        <img src="https://images.unsplash.com/photo-1518152006812-edab29b069ac?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Windows Admin">
+                        <div class="absolute top-2 right-2 bg-ink text-white px-2 py-1 font-mono text-[10px]">PROJECT</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col" >
+                        <div class="font-mono text-xs text-gray-500 mb-2">ID: SYSTEM_LAB_05</div>
+                        <h3 class="text-xl font-bold uppercase leading-none mb-4"><a href="https://github.com/Noorrizky/SILPMP" target="blank">System Lab Web App</a></h3>
+                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
+                            Created a Production Ready Lab System Website using Laravel 11, Filament, Mysql.
+                        </p>
+                    </div>
+                </article>
+
+                <!-- <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden border-b border-ink relative">
+                        <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=2000&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Ubuntu HA">
+                        <div class="absolute top-2 right-2 bg-ink text-white px-2 py-1 font-mono text-[10px]">FINAL_PROJECT</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="font-mono text-xs text-gray-500 mb-2">ID: UBN_HA_02</div>
+                        <h3 class="text-xl font-bold uppercase leading-none mb-4">Ubuntu HA Server</h3>
+                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
+                            High-availability setup. Automated Bash backups, Cron jobs, and UFW security.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden border-b border-ink relative">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Hybrid Network">
+                        <div class="absolute top-2 right-2 bg-ink text-white px-2 py-1 font-mono text-[10px]">NET_ARCH</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="font-mono text-xs text-gray-500 mb-2">ID: HYBRID_NET_03</div>
+                        <h3 class="text-xl font-bold uppercase leading-none mb-4">SOHO Network</h3>
+                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
+                            Designed and implemented a SOHO network using RouterOS, configuring DHCP, NAT, and Firewall Filters. 
+                        </p>
+                    </div>
+                </article>
+
+                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+                    <div class="h-48 overflow-hidden border-b border-ink relative">
+                        <img src="https://static.vecteezy.com/system/resources/previews/024/694/423/non_2x/cloud-service-icon-on-white-vector.jpg" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="AWS CI/CD">
+                        <div class="absolute top-2 right-2 bg-highlight text-ink px-2 py-1 font-mono text-[10px] font-bold">NEW_ENTRY</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="font-mono text-xs text-gray-500 mb-2">ID: AWS_CICD_04</div>
+                        <h3 class="text-xl font-bold uppercase leading-none mb-4">Automated Cloud Deploy</h3>
+                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
+                            Orchestrated a fully automated CI/CD pipeline using GitHub Actions, pushing Docker images to AWS ECR and deploying to EC2.
+                        </p>
+                    </div>
+                </article> -->
             </div>
         </section>
 
