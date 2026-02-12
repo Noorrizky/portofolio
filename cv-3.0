@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NRP // SPECIFICATION_SHEET</title>
+    <title>NRP // SPECIFICATION_SHEET_V2.2</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,15 +22,13 @@
                         mono: ['Space Mono', 'monospace'],
                     },
                     colors: {
-                        paper: '#ffffff', 
-                        ink: '#000000',   
+                        paper: '#f0f0f0', 
+                        ink: '#111111',   
                         highlight: '#ccff00', 
                     },
                     animation: {
-                        'marquee': 'marquee 25s linear infinite', /* Sedikit diperlambat karena teks bertambah */
+                        'marquee': 'marquee 25s linear infinite',
                         'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'loader': 'loader 2s ease-in-out forwards',
-                        'blink': 'blink 1s step-end infinite',
                     },
                     keyframes: {
                         marquee: {
@@ -40,14 +38,6 @@
                         slideUp: {
                             '0%': { opacity: 0, transform: 'translateY(40px)' },
                             '100%': { opacity: 1, transform: 'translateY(0)' },
-                        },
-                        loader: {
-                            '0%': { width: '0%' },
-                            '100%': { width: '100%' },
-                        },
-                        blink: {
-                            '0%, 100%': { opacity: 1 },
-                            '50%': { opacity: 0 },
                         }
                     }
                 }
@@ -56,231 +46,284 @@
     </script>
 
     <style>
+        /* --- UIVERSE INSPIRED CUSTOM CSS --- */
+
+        /* 1. NEO-BRUTALIST BUTTON */
+        .ui-btn-brutal {
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #111;
+            background-color: #fff;
+            border: 2px solid #111;
+            box-shadow: 4px 4px 0px #111;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            padding: 10px 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .ui-btn-brutal:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px #ccff00;
+            background-color: #111;
+            color: #ccff00;
+            border-color: #111;
+        }
+
+        .ui-btn-brutal:active {
+            transform: translate(2px, 2px);
+            box-shadow: 0px 0px 0px #111;
+        }
+
+        /* 2. TECH CARD */
+        .ui-card-tech {
+            background: #fff;
+            border: 2px solid #111;
+            position: relative;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+        }
+
+        .ui-card-tech::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            background: #ccff00;
+            border-top: 2px solid #111;
+            border-left: 2px solid #111;
+            z-index: 10;
+        }
+
+        .ui-card-tech:hover {
+            transform: translateY(-8px);
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
+        }
+
+        .ui-card-tech:hover .spec-image {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        /* 3. LOADER */
+        .ui-loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid #333;
+            border-bottom-color: #ccff00;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* UTILITIES */
         ::-webkit-scrollbar { width: 12px; }
-        ::-webkit-scrollbar-track { background: #fff; border-left: 1px solid #000; }
-        ::-webkit-scrollbar-thumb { background: #000; border: 2px solid #fff; }
+        ::-webkit-scrollbar-track { background: #fff; border-left: 2px solid #111; }
+        ::-webkit-scrollbar-thumb { background: #111; border: 2px solid #fff; }
         ::-webkit-scrollbar-thumb:hover { background: #ccff00; }
 
         .bg-technical {
+            background-color: #f0f0f0;
             background-image: 
-                linear-gradient(#e5e5e5 1px, transparent 1px),
-                linear-gradient(90deg, #e5e5e5 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-
-        .spec-card:hover .spec-image { filter: grayscale(0%); }
-        .spec-card:hover { background-color: #f8fafc; }
-        .spec-card:hover .view-btn { background-color: #000; color: #ccff00; }
-
-        /* Splash Screen Transition */
-        #splash-screen {
-            transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1);
-        }
-        .splash-hidden {
-            transform: translateY(-100%);
+                linear-gradient(#ccc 1px, transparent 1px),
+                linear-gradient(90deg, #ccc 1px, transparent 1px);
+            background-size: 30px 30px;
         }
         
-        /* Prevent scroll when splash is active */
-        body.loading { overflow: hidden; }
+        /* Language Bar */
+        .lang-bar {
+            height: 8px;
+            background: #eee;
+            border: 1px solid #111;
+            margin-top: 5px;
+            position: relative;
+        }
+        .lang-fill {
+            height: 100%;
+            background: #111;
+            display: block;
+        }
 
-        /* Animation Classes */
+        #splash-screen { transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1); }
+        .splash-hidden { transform: translateY(-100%); }
+        body.loading { overflow: hidden; }
         .opacity-0-start { opacity: 0; }
-        .delay-100 { animation-delay: 100ms; }
         .delay-200 { animation-delay: 200ms; }
         .delay-300 { animation-delay: 300ms; }
         .delay-400 { animation-delay: 400ms; }
         .delay-500 { animation-delay: 500ms; }
     </style>
 </head>
-<body class="bg-paper text-ink font-sans antialiased selection:bg-highlight selection:text-ink border-x border-ink min-h-screen max-w-[1400px] mx-auto box-border loading">
+<body class="bg-paper text-ink font-sans antialiased selection:bg-highlight selection:text-ink border-x-2 border-ink min-h-screen max-w-[1440px] mx-auto box-border loading">
 
     <div id="splash-screen" class="fixed inset-0 z-[100] bg-ink flex flex-col items-center justify-center text-white">
         <div class="text-center w-full max-w-md px-6">
-            <h1 class="font-black text-4xl md:text-6xl tracking-tighter mb-2">WELCOME</h1>
-            <div class="flex justify-between items-center font-mono text-xs text-highlight mb-6">
-                <span>USER: GUEST</span>
-                <span>SYSTEM_READY</span>
-            </div>
-            
-            <div class="w-full h-1 bg-gray-800 relative overflow-hidden mb-2">
-                <div class="absolute inset-0 bg-highlight animate-loader"></div>
-            </div>
-            
-            <div class="flex justify-between font-mono text-[10px] text-gray-500">
-                <span>INITIALIZING...</span>
-                <span class="animate-blink">_</span>
+            <h1 class="font-black text-5xl md:text-7xl tracking-tighter mb-6">LOADING_</h1>
+            <div class="ui-loader mb-8"></div>
+            <div class="flex justify-between items-center font-mono text-xs text-highlight border-t border-gray-800 pt-4">
+                <span>SYSTEM_CHECK: OK</span>
+                <span>NRP_V2.2</span>
             </div>
         </div>
     </div>
 
-    <nav class="sticky top-0 z-50 bg-paper border-b border-ink flex justify-between items-stretch h-14 transition-all duration-300">
-        <div class="flex items-center px-4 md:px-6 border-r border-ink font-mono font-bold text-sm">
+    <nav class="sticky top-0 z-50 bg-paper border-b-2 border-ink flex justify-between items-stretch h-16 transition-all duration-300 shadow-sm">
+        <div class="flex items-center px-6 border-r-2 border-ink font-mono font-bold text-lg bg-white">
             NRP_LAB
         </div>
         
-        <div class="hidden md:flex flex-1 divide-x divide-ink">
-            <a href="#intro" class="flex items-center px-6 hover:bg-highlight transition-colors duration-300 font-mono text-xs uppercase tracking-wider">01 // Intro</a>
-            <a href="#specs" class="flex items-center px-6 hover:bg-highlight transition-colors duration-300 font-mono text-xs uppercase tracking-wider">02 // Specs</a>
-            <a href="#experience" class="flex items-center px-6 hover:bg-highlight transition-colors duration-300 font-mono text-xs uppercase tracking-wider">03 // Exp</a>
-            <a href="#projects" class="flex items-center px-6 hover:bg-highlight transition-colors duration-300 font-mono text-xs uppercase tracking-wider">04 // Projects</a>
+        <div class="hidden md:flex flex-1 divide-x-2 divide-ink bg-white">
+            <a href="#intro" class="flex items-center px-6 hover:bg-highlight hover:text-ink transition-colors duration-200 font-mono text-xs uppercase font-bold tracking-wider">01 // Intro</a>
+            <a href="#specs" class="flex items-center px-6 hover:bg-highlight hover:text-ink transition-colors duration-200 font-mono text-xs uppercase font-bold tracking-wider">02 // Specs</a>
+            <a href="#experience" class="flex items-center px-6 hover:bg-highlight hover:text-ink transition-colors duration-200 font-mono text-xs uppercase font-bold tracking-wider">03 // Logs</a>
+            <a href="#projects" class="flex items-center px-6 hover:bg-highlight hover:text-ink transition-colors duration-200 font-mono text-xs uppercase font-bold tracking-wider">04 // Projects</a>
         </div>
 
-        <div class="hidden md:flex items-center px-6 bg-ink text-white font-mono text-xs hover:bg-highlight hover:text-ink cursor-pointer transition-colors duration-300 border-l border-ink">
-            <a href="mailto:noorrizkypermana@gmail.com">INIT_CONTACT [ ]</a>
+        <div class="hidden md:flex items-center px-6 bg-ink text-white font-mono text-xs hover:bg-highlight hover:text-ink cursor-pointer transition-colors duration-300 border-l-2 border-ink">
+            <a href="mailto:noorrizkypermana@gmail.com" class="font-bold">INIT_CONTACT_ [ ]</a>
         </div>
 
-        <button id="menu-btn" class="md:hidden px-6 border-l border-ink hover:bg-highlight transition-colors duration-300 flex items-center justify-center z-50 bg-paper">
-            <i class="fas fa-bars text-lg transition-transform duration-300" id="menu-icon"></i>
+        <button id="menu-btn" class="md:hidden px-6 border-l-2 border-ink hover:bg-highlight transition-colors duration-300 flex items-center justify-center z-50 bg-paper">
+            <i class="fas fa-bars text-xl" id="menu-icon"></i>
         </button>
     </nav>
 
-    <div id="mobile-menu" class="fixed top-14 left-0 w-full bg-paper flex flex-col divide-y divide-ink border-b border-ink transform -translate-y-[150%] transition-transform duration-500 ease-in-out z-40 shadow-2xl">
-        <a href="#intro" class="mobile-link py-5 px-6 font-mono text-sm font-bold uppercase hover:bg-highlight transition-colors duration-200">01 // Intro</a>
-        <a href="#specs" class="mobile-link py-5 px-6 font-mono text-sm font-bold uppercase hover:bg-highlight transition-colors duration-200">02 // Specs</a>
-        <a href="#experience" class="mobile-link py-5 px-6 font-mono text-sm font-bold uppercase hover:bg-highlight transition-colors duration-200">03 // Exp</a>
-        <a href="#projects" class="mobile-link py-5 px-6 font-mono text-sm font-bold uppercase hover:bg-highlight transition-colors duration-200">04 // Projects</a>
-        <a href="mailto:noorrizkypermana@gmail.com" class="mobile-link py-5 px-6 font-mono text-sm font-bold uppercase bg-ink text-white hover:bg-highlight hover:text-ink transition-colors duration-200">INIT_CONTACT [ ]</a>
+    <div id="mobile-menu" class="fixed top-16 left-0 w-full bg-paper flex flex-col divide-y-2 divide-ink border-b-2 border-ink transform -translate-y-[150%] transition-transform duration-500 ease-in-out z-40 shadow-2xl">
+        <a href="#intro" class="mobile-link py-5 px-6 font-mono text-sm font-bold uppercase hover:bg-highlight">01 // Intro</a>
+        <a href="#specs" class="mobile-link py-5 px-6 font-mono text-sm font-bold uppercase hover:bg-highlight">02 // Specs</a>
+        <a href="#experience" class="mobile-link py-5 px-6 font-mono text-sm font-bold uppercase hover:bg-highlight">03 // Logs</a>
+        <a href="#projects" class="mobile-link py-5 px-6 font-mono text-sm font-bold uppercase hover:bg-highlight">04 // Projects</a>
     </div>
 
-    <main class="divide-y divide-ink">
+    <main class="divide-y-2 divide-ink">
 
-        <section id="intro" class="grid grid-cols-1 md:grid-cols-12 min-h-[80vh] divide-y md:divide-y-0 md:divide-x divide-ink opacity-0-start content-reveal">
-            <div class="md:col-span-8 p-6 md:p-12 flex flex-col justify-between bg-technical relative">
-                <div class="font-mono text-xs mb-8">[ REF: IDN-2025 ]</div>
+        <section id="intro" class="grid grid-cols-1 md:grid-cols-12 min-h-[85vh] divide-y-2 md:divide-y-0 md:divide-x-2 divide-ink opacity-0-start content-reveal">
+            <div class="md:col-span-8 p-6 md:p-16 flex flex-col justify-between bg-technical relative">
+                <div class="font-mono text-xs mb-8 bg-ink text-white inline-block px-2 py-1">[ REF: IDN-2025 ]</div>
                 <div>
-                    <h1 class="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9] mb-6">
-                        Noor Rizky<br>Permana
+                    <h1 class="text-6xl md:text-9xl font-black tracking-tighter uppercase leading-[0.85] mb-8 drop-shadow-sm">
+                        Noor Rizky<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-ink to-gray-600">Permana</span>
                     </h1>
-                    <p class="text-xl md:text-2xl font-medium max-w-xl leading-tight border-l-4 border-ink pl-6">
-                        Constructing reliable hybrid infrastructure, website applications & automated server environments.
+                    <p class="text-xl md:text-2xl font-bold font-mono max-w-xl leading-tight bg-white border-2 border-ink p-4 shadow-[4px_4px_0px_#ccff00]">
+                        IT System Administrator ,Junior Network Engineer, Junior Fullstack Web Developer.
                     </p>
                 </div>
-                <div class="mt-12 flex gap-4">
-                    <div class="border border-ink px-4 py-2 font-mono text-xs uppercase bg-white hover:bg-highlight transition-colors duration-300 cursor-default">
-                        <i class="fas fa-bolt mr-2"></i> SysAdmin
-                    </div>
-                    <div class="border border-ink px-4 py-2 font-mono text-xs uppercase bg-white hover:bg-highlight transition-colors duration-300 cursor-default">
-                        <i class="fas fa-network-wired mr-2"></i> DevOps
-                    </div>
+                <div class="mt-12 flex gap-4 flex-wrap">
+                    <div class="ui-btn-brutal cursor-default"><i class="fas fa-bolt mr-2"></i> SysAdmin</div>
+                    <div class="ui-btn-brutal cursor-default"><i class="fas fa-network-wired mr-2"></i> DevOps</div>
+                    <div class="ui-btn-brutal cursor-default"><i class="fas fa-network-wired mr-2"></i> Fullstack Web Dev</div>
                 </div>
             </div>
-            <div class="md:col-span-4 flex flex-col divide-y divide-ink opacity-0-start content-reveal delay-200">
-                <div class="flex-1 bg-gray-100 relative overflow-hidden group border-b border-ink">
-                    <img src="https://lh3.googleusercontent.com/a/ACg8ocKQuNor1xYocVKwjHaGfnpxxgTwWqh1Jt9xfQ7HV4KVp8-9efHeGg=s288-c-no" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out" alt="Profile">
-                    <div class="absolute bottom-0 left-0 bg-ink text-white px-3 py-1 font-mono text-xs">IMG_REF_01</div>
+            
+            <div class="md:col-span-4 flex flex-col divide-y-2 divide-ink opacity-0-start content-reveal delay-200 bg-white">
+                <div class="flex-1 bg-gray-200 relative overflow-hidden group border-b-2 border-ink">
+                    <img src="https://lh3.googleusercontent.com/a/ACg8ocKQuNor1xYocVKwjHaGfnpxxgTwWqh1Jt9xfQ7HV4KVp8-9efHeGg=s288-c-no" class="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700 ease-out" alt="Profile">
+                    <div class="absolute bottom-0 left-0 bg-highlight text-ink px-4 py-2 font-mono text-xs font-bold border-t-2 border-r-2 border-ink">IMG_REF_01</div>
                 </div>
-                <div class="p-6 bg-paper">
-                    <h3 class="font-bold text-lg mb-4 uppercase border-b border-ink pb-2">Current Status</h3>
-                    <ul class="font-mono text-xs space-y-3">
-                        <li class="flex justify-between hover:bg-gray-50 p-1 transition-colors">
-                            <span class="text-gray-500">PHASE:</span>
-                            <span class="font-bold bg-highlight px-1">UPSKILLING</span>
+                <div class="p-8 bg-paper">
+                    <h3 class="font-black text-xl mb-6 uppercase border-b-2 border-ink pb-2">Status Log</h3>
+                    <ul class="font-mono text-sm space-y-4">
+                        <li class="flex justify-between items-center border-b border-gray-300 pb-2">
+                            <span class="text-gray-500 font-bold">STATUS:</span>
+                            <span class="bg-ink text-highlight px-2 py-0.5 font-bold">AVAILABLE</span>
                         </li>
-                        <li class="flex justify-between hover:bg-gray-50 p-1 transition-colors">
-                            <span class="text-gray-500">MAIN OS:</span>
-                            <span class="font-bold">LINUX</span>
+                        <li class="flex justify-between items-center border-b border-gray-300 pb-2">
+                            <span class="text-gray-500 font-bold">MAIN OS:</span>
+                            <span class="font-bold">LINUX (ARCH)</span>
                         </li>
-                        <li class="flex justify-between hover:bg-gray-50 p-1 transition-colors">
-                            <span class="text-gray-500">FOCUS:</span>
-                            <span class="font-bold">System On Premise & Cloud</span>
-                        </li>
-                        <li class="flex justify-between hover:bg-gray-50 p-1 transition-colors">
-                            <span class="text-gray-500">LOCATION:</span>
-                            <span class="font-bold">INDONESIA</span>
+                        <li class="flex justify-between items-center pt-1">
+                            <span class="text-gray-500 font-bold">LOC:</span>
+                            <span class="font-bold">IDN, KALIMANTAN</span>
                         </li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <div class="border-b border-ink bg-ink text-highlight overflow-hidden py-3 relative z-10 opacity-0-start content-reveal delay-300">
-            <div class="flex whitespace-nowrap animate-marquee font-mono text-sm font-bold uppercase tracking-widest">
-                <span class="mx-6">/// SYSTEM_STATUS: ONLINE</span>
-                <span class="mx-6">/// CI_CD_PIPELINE_ACTIVE</span>
-                <span class="mx-6">/// DOCKER_CONTAINERIZED</span>
-                <span class="mx-6">/// AWS_CLOUD_CONNECTED</span>
-                <span class="mx-6">/// ARCH_LINUX_KERNEL_6.6</span>
-                <span class="mx-6">/// UPTIME: 99.9%</span>
-                <span class="mx-6">/// SYSTEM_STATUS: ONLINE</span>
-                <span class="mx-6">/// CI_CD_PIPELINE_ACTIVE</span>
-                <span class="mx-6">/// DOCKER_CONTAINERIZED</span>
-                <span class="mx-6">/// AWS_CLOUD_CONNECTED</span>
+        <div class="border-b-2 border-ink bg-highlight text-ink overflow-hidden py-4 relative z-10 opacity-0-start content-reveal delay-300">
+            <div class="flex whitespace-nowrap animate-marquee font-mono text-base font-black uppercase tracking-widest">
+                <span class="mx-8"><i class="fas fa-check-circle"></i> SYSTEM_STATUS: ONLINE</span>
+                <span class="mx-8"><i class="fas fa-sync"></i> ASSET_MANAGEMENT_ACTIVE</span>
+                <span class="mx-8"><i class="fas fa-box"></i> DOCKER_CONTAINERIZED</span>
+                <span class="mx-8"><i class="fas fa-cloud"></i> AWS_CLOUD_CONNECTED</span>
+                <span class="mx-8"><i class="fas fa-clock"></i> UPTIME: 99.9%</span>
             </div>
         </div>
 
-        <section id="specs" class="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-ink opacity-0-start content-reveal delay-400">
-            <div class="md:col-span-3 p-6 bg-gray-50 border-r border-ink flex items-center justify-center">
-                <h2 class="text-4xl font-black uppercase tracking-tighter md:writing-vertical-rl">
-                    Technical Specs
+        <section id="specs" class="grid grid-cols-1 md:grid-cols-12 divide-y-2 md:divide-y-0 md:divide-x-2 divide-ink opacity-0-start content-reveal delay-400 bg-white">
+            <div class="md:col-span-2 p-6 bg-ink text-white flex items-center justify-center">
+                <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter md:writing-vertical-rl text-center md:text-left leading-none">
+                    Tech<br><span class="text-highlight">Specs</span>
                 </h2>
             </div>
             
-            <div class="md:col-span-9">
-                <div class="grid grid-cols-1 md:grid-cols-4 border-b border-ink group hover:bg-gray-50 transition-colors duration-300">
-                    <div class="md:col-span-1 p-4 border-b md:border-b-0 md:border-r border-ink bg-gray-50 font-bold uppercase text-sm flex items-center">
-                        01. Core Systems
-                    </div>
-                    <div class="md:col-span-3 p-4 font-mono text-sm grid grid-cols-2 gap-4">
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> Windows Server</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> Ubuntu Linux</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> Bash Scripting</div>
+            <div class="md:col-span-10">
+                <div class="grid grid-cols-1 md:grid-cols-4 border-b-2 border-ink group hover:bg-gray-50 transition-colors duration-300">
+                    <div class="md:col-span-1 p-6 border-b-2 md:border-b-0 md:border-r-2 border-ink bg-gray-100 font-black uppercase text-base flex items-center">01. Core Systems</div>
+                    <div class="md:col-span-3 p-6 font-mono text-sm grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-3"><i class="fab fa-windows text-lg"></i> Windows Server</div>
+                        <div class="flex items-center gap-3"><i class="fab fa-linux text-lg"></i> Linux Server</div>
+                        <div class="flex items-center gap-3"><i class="fas fa-terminal text-lg"></i> Bash Scripting</div>
                     </div>
                 </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-4 border-b border-ink group hover:bg-gray-50 transition-colors duration-300">
-                    <div class="md:col-span-1 p-4 border-b md:border-b-0 md:border-r border-ink bg-gray-50 font-bold uppercase text-sm flex items-center">
-                        02. Network
-                    </div>
-                    <div class="md:col-span-3 p-4 font-mono text-sm grid grid-cols-2 gap-4">
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> MikroTik RouterOS</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> AWS Cloud Net</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> VLAN / VPN</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> Cloudflare</div>
+                <div class="grid grid-cols-1 md:grid-cols-4 border-b-2 border-ink group hover:bg-gray-50 transition-colors duration-300">
+                    <div class="md:col-span-1 p-6 border-b-2 md:border-b-0 md:border-r-2 border-ink bg-gray-100 font-black uppercase text-base flex items-center">02. Network</div>
+                    <div class="md:col-span-3 p-6 font-mono text-sm grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-3"><i class="fas fa-router text-lg"></i> MikroTik RouterOS</div>
+                        <div class="flex items-center gap-3"><i class="fab fa-aws text-lg"></i> AWS Cloud Net</div>
+                        <div class="flex items-center gap-3"><i class="fas fa-shield-alt text-lg"></i> VLAN / VPN</div>
                     </div>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-4 border-b border-ink group hover:bg-gray-50 transition-colors duration-300">
-                    <div class="md:col-span-1 p-4 border-b md:border-b-0 md:border-r border-ink bg-gray-50 font-bold uppercase text-sm flex items-center">
-                        03. Web Stack
-                    </div>
-                    <div class="md:col-span-3 p-4 font-mono text-sm grid grid-cols-2 gap-4">
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> JavaScript / Node</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> PHP / Laravel</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> HTML / CSS</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> Git / Version Control</div>
+                <div class="grid grid-cols-1 md:grid-cols-4 border-b-2 border-ink group hover:bg-gray-50 transition-colors duration-300">
+                    <div class="md:col-span-1 p-6 border-b-2 md:border-b-0 md:border-r-2 border-ink bg-gray-100 font-black uppercase text-base flex items-center">03. Web Stack</div>
+                    <div class="md:col-span-3 p-6 font-mono text-sm grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-3"><i class="fab fa-laravel text-lg"></i> PHP / Laravel</div>
+                        <div class="flex items-center gap-3"><i class="fab fa-js text-lg"></i> Node.js</div>
+                        <div class="flex items-center gap-3"><i class="fab fa-html5 text-lg"></i> HTML / Tailwind</div>
                     </div>
                 </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-4 group hover:bg-gray-50 transition-colors duration-300">
-                    <div class="md:col-span-1 p-4 border-b md:border-b-0 md:border-r border-ink bg-gray-50 font-bold uppercase text-sm flex items-center">
-                        04. Cloud & DevOps
-                    </div>
-                    <div class="md:col-span-3 p-4 font-mono text-sm grid grid-cols-2 gap-4">
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-highlight border border-ink"></span> AWS (EC2/ECR)</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-highlight border border-ink"></span> Docker Container</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-highlight border border-ink"></span> GitHub Actions (CI/CD)</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-ink"></span> IAM Security</div>
+                <div class="grid grid-cols-1 md:grid-cols-4 border-b-2 border-ink group hover:bg-gray-50 transition-colors duration-300">
+                    <div class="md:col-span-1 p-6 border-b-2 md:border-b-0 md:border-r-2 border-ink bg-gray-100 font-black uppercase text-base flex items-center">04. Functional</div>
+                    <div class="md:col-span-3 p-6 font-mono text-sm grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-3"><i class="fas fa-boxes text-lg"></i> IT Asset Mgmt</div>
+                        <div class="flex items-center gap-3"><i class="fas fa-headset text-lg"></i> IT Helpdesk & Support</div>
+                        <div class="flex items-center gap-3"><i class="fab fa-microsoft text-lg"></i> MS Office Suite</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="experience" class="grid grid-cols-1 md:grid-cols-12 divide-y md:divide-y-0 md:divide-x divide-ink border-t border-ink opacity-0-start content-reveal delay-500">
-            <div class="md:col-span-3 p-6 bg-gray-50 border-r border-ink flex items-center justify-center">
-                <h2 class="text-4xl font-black uppercase tracking-tighter md:writing-vertical-rl">
-                    Operation Logs
+        <section id="experience" class="grid grid-cols-1 md:grid-cols-12 divide-y-2 md:divide-y-0 md:divide-x-2 divide-ink border-t-2 border-ink opacity-0-start content-reveal delay-500 bg-white">
+            <div class="md:col-span-2 p-6 bg-highlight text-ink flex items-center justify-center">
+                <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tighter md:writing-vertical-rl text-center md:text-left leading-none">
+                    Op<br><span class="text-white bg-ink px-1">Logs</span>
                 </h2>
             </div>
             
-            <div class="md:col-span-9">
-                <div class="grid grid-cols-1 md:grid-cols-12 border-b border-ink group hover:bg-highlight/10 transition-colors duration-300 cursor-crosshair">
-                    <div class="md:col-span-3 p-6 font-mono text-xs border-b md:border-b-0 md:border-r border-ink text-gray-500">
-                        [ 2024 - 2025 ]<br>DURATION: 5 MOS
+            <div class="md:col-span-10">
+                <div class="grid grid-cols-1 md:grid-cols-12 border-b-2 border-ink group hover:bg-gray-50 transition-colors duration-300">
+                    <div class="md:col-span-3 p-6 font-mono text-xs border-b-2 md:border-b-0 md:border-r-2 border-ink text-gray-500 group-hover:text-ink">
+                        <span class="block text-xl font-black text-ink mb-1">2024-25</span>
+                        PT Saraswanti Indoland Development Tbk
                     </div>
                     <div class="md:col-span-9 p-6">
-                        <h3 class="text-xl font-bold uppercase mb-1 group-hover:text-ink transition-colors">IT Support Intern</h3>
-                        <div class="font-mono text-xs mb-4 text-gray-600">@ PT. Saraswanti Indoland</div>
-                        <ul class="list-disc list-inside font-mono text-sm space-y-1 text-gray-700">
+                        <h3 class="text-2xl font-black uppercase mb-1 group-hover:text-highlight bg-ink text-white inline-block px-2 transition-colors">IT Support Intern</h3>
+                        <div class="font-mono text-xs mb-4 text-gray-600 font-bold mt-1">IT Infrastructure & Support</div>
+                        <ul class="list-disc list-inside font-mono text-sm space-y-2 text-gray-800">
                             <li>Managed Windows Server infrastructure & Active Directory.</li>
                             <li>Implemented Group Policy (GPO) for security compliance.</li>
                             <li>Provided L1/L2 network support & hardware troubleshooting.</li>
@@ -288,16 +331,22 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-12 group hover:bg-highlight/10 transition-colors duration-300 cursor-crosshair">
-                    <div class="md:col-span-3 p-6 font-mono text-xs border-b md:border-b-0 md:border-r border-ink text-gray-500">
-                        [ 2022 - 2025 ]<br>STATUS: GRADUATED
+                <div class="grid grid-cols-1 md:grid-cols-12 group hover:bg-gray-50 transition-colors duration-300">
+                    <div class="md:col-span-3 p-6 font-mono text-xs border-b-2 md:border-b-0 md:border-r-2 border-ink text-gray-500 group-hover:text-ink">
+                        <span class="block text-xl font-black text-ink mb-1">2022-25</span>
+                        EDUCATION
                     </div>
                     <div class="md:col-span-9 p-6">
-                        <h3 class="text-xl font-bold uppercase mb-1 group-hover:text-ink transition-colors">Informatics Engineering Student</h3>
-                        <div class="font-mono text-xs mb-4 text-gray-600">@ Politeknik Negeri Banjarmasin</div>
-                        <ul class="list-disc list-inside font-mono text-sm space-y-1 text-gray-700">
-                            <li>3.74 GPA.</li>
-                            <li>Specializing in Backend Logic & Network Administration.</li>
+                        <h3 class="text-2xl font-black uppercase mb-1 group-hover:text-highlight bg-ink text-white inline-block px-2 transition-colors">Diploma of Informatics Engineering</h3>
+                        <div class="font-mono text-xs mb-4 text-gray-600 font-bold mt-1">@ Banjarmasin State Polytechnic</div>
+                        
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="border border-ink px-3 py-1 font-bold text-sm bg-highlight">GPA: 3.74 / 4.00</span>
+                        </div>
+
+                        <ul class="list-disc list-inside font-mono text-sm space-y-2 text-gray-800">
+                            <li>Focus: IT Asset Management & System Administration.</li>
+                            <li>Specialization: Backend Logic & Network Administration.</li>
                             <li>Final Project: Ubuntu Server Automation & Hardening.</li>
                         </ul>
                     </div>
@@ -305,176 +354,165 @@
             </div>
         </section>
 
-        <section id="projects" class="bg-gray-50 p-6 md:p-12 border-t border-ink opacity-0-start content-reveal delay-500">
-            <div class="flex justify-between items-end mb-8 border-b border-ink pb-4">
-                <h2 class="text-4xl font-black uppercase tracking-tighter">Project Index</h2>
-                <span class="font-mono text-xs">[ TOTAL: 06 ]</span>
+        <section class="grid grid-cols-1 md:grid-cols-2 divide-y-2 md:divide-y-0 md:divide-x-2 divide-ink border-t-2 border-ink bg-paper">
+            
+            <div class="p-8 md:p-12">
+                <div class="flex items-center gap-2 mb-6">
+                    <i class="fas fa-certificate text-2xl"></i>
+                    <h3 class="text-2xl font-black uppercase">Certifications</h3>
+                </div>
+                <div class="space-y-4">
+                    <div class="bg-white border-2 border-ink p-4 shadow-[4px_4px_0px_#111] hover:translate-x-1 transition-transform">
+                        <h4 class="font-bold uppercase"><a href="https://www.linkedin.com/in/noor-rizky-permana-965969269/">Junior Web Developer</a></h4>
+                        <p class="font-mono text-xs text-gray-600">Issued by Digitalent</p>
+                    </div>
+                    <div class="bg-white border-2 border-ink p-4 shadow-[4px_4px_0px_#111] hover:translate-x-1 transition-transform">
+                        <h4 class="font-bold uppercase"><a href="https://www.linkedin.com/in/noor-rizky-permana-965969269/">Teknisi Komputer Muda</a></h4>
+                        <p class="font-mono text-xs text-gray-600">Issued by BNSP</p>
+                    </div>
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden border-b border-ink relative">
-                        <img src="https://www.nakulasadewa.com/wp-content/uploads/2025/10/windows-server.jpg" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Windows Admin">
-                        <div class="absolute top-2 right-2 bg-ink text-white px-2 py-1 font-mono text-[10px]">CASE_STUDY</div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="font-mono text-xs text-gray-500 mb-2">ID: WIN_ADMIN_01</div>
-                        <h3 class="text-xl font-bold uppercase leading-none mb-4">Windows Server Admin</h3>
-                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
-                            Configured Active Directory (AD DS), GPO implementation, and DNS/DHCP management.
-                        </p>
-                    </div>
-                </article>
 
-                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden border-b border-ink relative">
-                        <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=2000&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Ubuntu HA">
-                        <div class="absolute top-2 right-2 bg-ink text-white px-2 py-1 font-mono text-[10px]">FINAL_PROJECT</div>
+            <div class="p-8 md:p-12 bg-white">
+                <div class="flex items-center gap-2 mb-6">
+                    <i class="fas fa-language text-2xl"></i>
+                    <h3 class="text-2xl font-black uppercase">Languages</h3>
+                </div>
+                <div class="space-y-6 font-mono text-sm">
+                    
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-bold">INDONESIA</span>
+                            <span class="text-xs bg-ink text-white px-1">NATIVE</span>
+                        </div>
+                        <div class="lang-bar"><span class="lang-fill" style="width: 100%"></span></div>
                     </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="font-mono text-xs text-gray-500 mb-2">ID: UBN_HA_02</div>
-                        <h3 class="text-xl font-bold uppercase leading-none mb-4">Ubuntu HA Server</h3>
-                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
-                            High-availability setup. Automated Bash backups, Cron jobs, and UFW security.
-                        </p>
-                    </div>
-                </article>
 
-                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden border-b border-ink relative">
-                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Hybrid Network">
-                        <div class="absolute top-2 right-2 bg-ink text-white px-2 py-1 font-mono text-[10px]">NET_ARCH</div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-bold">ENGLISH</span>
+                            <span class="text-xs bg-gray-200 px-1">PROFESSIONAL</span>
+                        </div>
+                        <div class="lang-bar"><span class="lang-fill" style="width: 85%"></span></div>
                     </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="font-mono text-xs text-gray-500 mb-2">ID: HYBRID_NET_03</div>
-                        <h3 class="text-xl font-bold uppercase leading-none mb-4">SOHO Network</h3>
-                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
-                            Designed and implemented a SOHO network using RouterOS, configuring DHCP, NAT, and Firewall Filters. 
-                        </p>
-                    </div>
-                </article>
 
-                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden border-b border-ink relative">
-                        <img src="https://static.vecteezy.com/system/resources/previews/024/694/423/non_2x/cloud-service-icon-on-white-vector.jpg" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="AWS CI/CD">
-                        <div class="absolute top-2 right-2 bg-highlight text-ink px-2 py-1 font-mono text-[10px] font-bold">NEW_ENTRY</div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="font-bold">JAPANESE</span>
+                            <span class="text-xs bg-gray-200 px-1">ELEMENTARY</span>
+                        </div>
+                        <div class="lang-bar"><span class="lang-fill bg-highlight" style="width: 30%"></span></div>
                     </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="font-mono text-xs text-gray-500 mb-2">ID: AWS_CICD_04</div>
-                        <h3 class="text-xl font-bold uppercase leading-none mb-4">Automated Cloud Deploy</h3>
-                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
-                            Orchestrated a fully automated CI/CD pipeline using GitHub Actions, pushing Docker images to AWS ECR and deploying to EC2.
-                        </p>
-                    </div>
-                </article>
-            </div>
-            </div>
-            <!--  -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
-                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden border-b border-ink relative">
-                        <img src="https://images.unsplash.com/photo-1518152006812-edab29b069ac?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Windows Admin">
-                        <div class="absolute top-2 right-2 bg-ink text-white px-2 py-1 font-mono text-[10px]">PROJECT</div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col" >
-                        <div class="font-mono text-xs text-gray-500 mb-2">ID: SYSTEM_LAB_05</div>
-                        <h3 class="text-xl font-bold uppercase leading-none mb-4"><a href="https://github.com/Noorrizky/SILPMP" target="blank">System Lab Web App</a></h3>
-                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
-                            Created a Production Ready Lab System Website using Laravel 11, Filament, Mysql.
-                        </p>
-                    </div>
-                </article>
 
-                <!-- <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden border-b border-ink relative">
-                        <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=2000&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Ubuntu HA">
-                        <div class="absolute top-2 right-2 bg-ink text-white px-2 py-1 font-mono text-[10px]">FINAL_PROJECT</div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="font-mono text-xs text-gray-500 mb-2">ID: UBN_HA_02</div>
-                        <h3 class="text-xl font-bold uppercase leading-none mb-4">Ubuntu HA Server</h3>
-                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
-                            High-availability setup. Automated Bash backups, Cron jobs, and UFW security.
-                        </p>
-                    </div>
-                </article>
-
-                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden border-b border-ink relative">
-                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Hybrid Network">
-                        <div class="absolute top-2 right-2 bg-ink text-white px-2 py-1 font-mono text-[10px]">NET_ARCH</div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="font-mono text-xs text-gray-500 mb-2">ID: HYBRID_NET_03</div>
-                        <h3 class="text-xl font-bold uppercase leading-none mb-4">SOHO Network</h3>
-                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
-                            Designed and implemented a SOHO network using RouterOS, configuring DHCP, NAT, and Firewall Filters. 
-                        </p>
-                    </div>
-                </article>
-
-                <article class="spec-card border border-ink bg-white flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-                    <div class="h-48 overflow-hidden border-b border-ink relative">
-                        <img src="https://static.vecteezy.com/system/resources/previews/024/694/423/non_2x/cloud-service-icon-on-white-vector.jpg" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="AWS CI/CD">
-                        <div class="absolute top-2 right-2 bg-highlight text-ink px-2 py-1 font-mono text-[10px] font-bold">NEW_ENTRY</div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="font-mono text-xs text-gray-500 mb-2">ID: AWS_CICD_04</div>
-                        <h3 class="text-xl font-bold uppercase leading-none mb-4">Automated Cloud Deploy</h3>
-                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-600 flex-1">
-                            Orchestrated a fully automated CI/CD pipeline using GitHub Actions, pushing Docker images to AWS ECR and deploying to EC2.
-                        </p>
-                    </div>
-                </article> -->
+                </div>
             </div>
         </section>
 
-        <footer class="bg-ink text-white p-6 md:p-12 border-t border-ink">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <section id="projects" class="bg-technical p-6 md:p-16 border-t-2 border-ink opacity-0-start content-reveal delay-500">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12 border-b-4 border-ink pb-6">
                 <div>
-                    <h2 class="text-4xl font-black uppercase tracking-tighter mb-2">Ready to Deploy?</h2>
-                    <p class="font-mono text-sm text-gray-400 max-w-md">
+                    <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-2">Project Index</h2>
+                    <div class="h-2 w-24 bg-highlight"></div>
+                </div>
+                <span class="font-mono text-sm font-bold bg-ink text-white px-3 py-1 mt-4 md:mt-0">[ DATABASE: 04 ENTRIES ]</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <article class="ui-card-tech flex flex-col h-full">
+                    <div class="h-48 overflow-hidden border-b-2 border-ink relative bg-gray-200">
+                        <img src="https://www.nakulasadewa.com/wp-content/uploads/2025/10/windows-server.jpg" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Windows">
+                        <div class="absolute top-0 right-0 bg-ink text-highlight px-3 py-1 font-mono text-xs font-bold border-b-2 border-l-2 border-ink">CASE_STUDY</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="font-mono text-[10px] font-bold text-gray-500 mb-2">ID: WIN_ADMIN_01</div>
+                        <h3 class="text-xl font-black uppercase leading-none mb-3">Windows Server</h3>
+                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-700 flex-1">Configured Active Directory (AD DS), GPO, and DNS/DHCP.</p>
+                    </div>
+                </article>
+
+                <article class="ui-card-tech flex flex-col h-full">
+                    <div class="h-48 overflow-hidden border-b-2 border-ink relative bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=2000&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Ubuntu">
+                        <div class="absolute top-0 right-0 bg-highlight text-ink px-3 py-1 font-mono text-xs font-bold border-b-2 border-l-2 border-ink">FINAL_PROJ</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="font-mono text-[10px] font-bold text-gray-500 mb-2">ID: UBN_HA_02</div>
+                        <h3 class="text-xl font-black uppercase leading-none mb-3">Ubuntu HA Server</h3>
+                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-700 flex-1">High-availability setup with automated Bash backups.</p>
+                    </div>
+                </article>
+
+                <article class="ui-card-tech flex flex-col h-full">
+                    <div class="h-48 overflow-hidden border-b-2 border-ink relative bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2000&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="Network">
+                        <div class="absolute top-0 right-0 bg-ink text-white px-3 py-1 font-mono text-xs font-bold border-b-2 border-l-2 border-ink">NET_ARCH</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="font-mono text-[10px] font-bold text-gray-500 mb-2">ID: HYBRID_NET_03</div>
+                        <h3 class="text-xl font-black uppercase leading-none mb-3">SOHO Network</h3>
+                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-700 flex-1">Designed network using RouterOS, DHCP, NAT.</p>
+                    </div>
+                </article>
+
+                 <article class="ui-card-tech flex flex-col h-full">
+                    <div class="h-48 overflow-hidden border-b-2 border-ink relative bg-gray-200">
+                        <img src="https://images.unsplash.com/photo-1518152006812-edab29b069ac?q=80&w=1470&auto=format&fit=crop" class="spec-image w-full h-full object-cover grayscale transition-all duration-500" alt="System Lab">
+                        <div class="absolute top-0 right-0 bg-ink text-white px-3 py-1 font-mono text-xs font-bold border-b-2 border-l-2 border-ink">WEB_APP</div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="font-mono text-[10px] font-bold text-gray-500 mb-2">ID: SYSTEM_LAB_05</div>
+                        <h3 class="text-xl font-black uppercase leading-none mb-3">System Lab App</h3>
+                        <p class="font-mono text-xs leading-relaxed mb-6 text-gray-700 flex-1">
+                            Production Ready Lab System using Laravel 11, Filament.
+                        </p>
+                        <a href="https://github.com/Noorrizky/SILPMP" target="_blank" class="mt-4 text-xs font-bold uppercase underline decoration-2 decoration-highlight hover:bg-highlight hover:no-underline px-1 w-max">
+                            View Source >
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <footer class="bg-ink text-white p-6 md:p-16 border-t-2 border-ink">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Ready to <span class="text-transparent bg-clip-text bg-gradient-to-r from-highlight to-white">Deploy?</span></h2>
+                    <p class="font-mono text-sm text-gray-400 max-w-md border-l-2 border-highlight pl-4">
                         Available for full-time roles in System Administration and Network Engineering.
                     </p>
                 </div>
-                <div class="flex flex-col md:flex-row gap-4 justify-start md:justify-end">
-                    <a href="mailto:noorrizkypermana@gmail.com" class="border border-white px-8 py-4 font-mono text-sm uppercase hover:bg-highlight hover:text-ink hover:border-highlight transition-colors text-center">
-                        Execute_Email [ ]
-                    </a>
-                    <a href="https://linkedin.com/in/noor-rizky-permana-965969269/" class="border border-white px-8 py-4 font-mono text-sm uppercase hover:bg-highlight hover:text-ink hover:border-highlight transition-colors text-center">
-                        LinkedIn_Profile [ ]
-                    </a>
+                <div class="flex flex-col sm:flex-row gap-4 justify-start md:justify-end">
+                    <a href="mailto:noorrizkypermana@gmail.com" class="ui-btn-brutal">Execute_Email [ ]</a>
+                    <a href="https://linkedin.com/in/noor-rizky-permana-965969269/" class="ui-btn-brutal">LinkedIn_Profile [ ]</a>
                 </div>
             </div>
-            
-            <div class="border-t border-gray-800 mt-12 pt-6 flex justify-between font-mono text-[10px] text-gray-500 uppercase">
-                <span>© 2025 Noor Rizky Permana</span>
-                <span>System_Status: Online</span>
+            <div class="border-t border-gray-800 mt-16 pt-8 flex flex-col md:flex-row justify-between font-mono text-[10px] text-gray-500 uppercase">
+                <span>© 2025 Noor Rizky Permana // All Rights Reserved</span>
+                <span class="mt-2 md:mt-0">Server_Time: <span id="clock"></span> // System_Status: Online</span>
             </div>
         </footer>
 
     </main>
 
     <script>
-        // Splash Screen Logic
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toISOString().split('T')[1].split('.')[0];
+        }, 1000);
+
         window.addEventListener('load', () => {
             const splash = document.getElementById('splash-screen');
             const contentElements = document.querySelectorAll('.content-reveal');
             
-            // Wait for 2.5 seconds (loading bar duration + buffer)
             setTimeout(() => {
-                // 1. Slide up the splash screen
                 splash.classList.add('splash-hidden');
                 document.body.classList.remove('loading');
-
-                // 2. Trigger animations for main content with staggered delay
                 contentElements.forEach((el) => {
                     el.classList.add('animate-slide-up');
                 });
-
-            }, 2200);
+            }, 2000);
         });
 
-        // Mobile Menu Toggle Logic
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileLinks = document.querySelectorAll('.mobile-link');
@@ -483,19 +521,16 @@
 
         menuBtn.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
-            
             if (isMenuOpen) {
                 mobileMenu.classList.remove('-translate-y-[150%]');
                 mobileMenu.classList.add('translate-y-[60px]'); 
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-times');
-                icon.classList.add('rotate-90');
             } else {
                 mobileMenu.classList.add('-translate-y-[150%]');
                 mobileMenu.classList.remove('translate-y-[60px]');
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
-                icon.classList.remove('rotate-90');
             }
         });
 
@@ -506,7 +541,6 @@
                 mobileMenu.classList.remove('translate-y-[60px]');
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
-                icon.classList.remove('rotate-90');
             });
         });
     </script>
