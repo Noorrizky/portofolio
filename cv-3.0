@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NRP // SPECIFICATION_SHEET_V2.2</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>
@@ -22,9 +22,9 @@
                         mono: ['Space Mono', 'monospace'],
                     },
                     colors: {
-                        paper: '#f0f0f0', 
-                        ink: '#111111',   
-                        highlight: '#ccff00', 
+                        paper: '#f0f0f0',
+                        ink: '#111111',
+                        highlight: '#ccff00',
                     },
                     animation: {
                         'marquee': 'marquee 25s linear infinite',
@@ -138,12 +138,12 @@
 
         .bg-technical {
             background-color: #f0f0f0;
-            background-image: 
+            background-image:
                 linear-gradient(#ccc 1px, transparent 1px),
                 linear-gradient(90deg, #ccc 1px, transparent 1px);
             background-size: 30px 30px;
         }
-        
+
         /* Language Bar */
         .lang-bar {
             height: 8px;
@@ -160,6 +160,47 @@
 
         #splash-screen { transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1); }
         .splash-hidden { transform: translateY(-100%); }
+        .splash-grid {
+            background-color: #111;
+            background-image:
+                linear-gradient(rgba(204,255,0,0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(204,255,0,0.08) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        .splash-orbit {
+            width: 76px;
+            height: 76px;
+            border: 3px solid #ccff00;
+            border-radius: 50%;
+            position: relative;
+            display: grid;
+            place-items: center;
+            transform: rotate(-24deg);
+        }
+        .splash-orbit::before {
+            content: "";
+            position: absolute;
+            width: 106px;
+            height: 32px;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            transform: rotate(-42deg);
+        }
+        .splash-orbit::after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ccff00;
+            top: 1px;
+            right: 6px;
+        }
+        .splash-scanline { animation: splashScan 2s ease-in-out infinite; }
+        @keyframes splashScan {
+            0%, 100% { opacity: 0.25; transform: scaleX(0.35); transform-origin: left; }
+            50% { opacity: 1; transform: scaleX(1); transform-origin: left; }
+        }
         body.loading { overflow: hidden; }
         .opacity-0-start { opacity: 0; }
         .delay-200 { animation-delay: 200ms; }
@@ -170,14 +211,44 @@
 </head>
 <body class="bg-paper text-ink font-sans antialiased selection:bg-highlight selection:text-ink border-x-2 border-ink min-h-screen max-w-[1440px] mx-auto box-border loading">
 
-    <div id="splash-screen" class="fixed inset-0 z-[100] bg-ink flex flex-col items-center justify-center text-white">
-        <div class="text-center w-full max-w-md px-6">
-            <h1 class="font-black text-5xl md:text-7xl tracking-tighter mb-6">LOADING_</h1>
-            <div class="ui-loader mb-8"></div>
-            <div class="flex justify-between items-center font-mono text-xs text-highlight border-t border-gray-800 pt-4">
-                <span>SYSTEM_CHECK: OK</span>
-                <span>NRP_V2.2</span>
+    <div id="splash-screen" class="fixed inset-0 z-[100] bg-ink flex flex-col items-center justify-center text-white splash-grid">
+        <div class="absolute top-6 left-6 right-6 flex justify-between font-mono text-[10px] md:text-xs text-gray-500 uppercase tracking-widest">
+            <span>NRP_LAB // BOOT_SEQUENCE</span>
+            <span>SYS_2026.03</span>
+        </div>
+        <div class="w-full max-w-2xl px-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-8 border-2 border-white bg-ink p-6 md:p-10 shadow-[8px_8px_0px_#ccff00]">
+                <div class="splash-orbit shrink-0" aria-label="Orbit Future Academy inspired loading mark">
+                    <span class="font-black text-xs tracking-tighter rotate-[24deg]">NRP</span>
+                </div>
+                <div class="w-full">
+                    <div class="flex items-end justify-between gap-4 mb-3">
+                        <div>
+                            <p class="font-mono text-xs text-highlight mb-2">PORTFOLIO SYSTEM</p>
+                            <h1 class="font-black text-5xl md:text-7xl tracking-tighter leading-[0.8]">LOADING<span class="text-highlight">_</span></h1>
+                        </div>
+                        <span id="splash-percent" class="font-mono text-2xl font-bold text-highlight">00%</span>
+                    </div>
+                    <div class="h-4 border-2 border-white p-0.5 mb-4">
+                        <div id="splash-progress" class="h-full bg-highlight transition-[width] duration-150 ease-out" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between font-mono text-[10px] md:text-xs text-gray-400 border-t border-gray-700 pt-3">
+                        <span id="splash-status">INITIALIZING CORE SYSTEMS...</span>
+                        <span>NRP</span>
+                    </div>
+                </div>
             </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mt-5 font-mono text-[10px] uppercase">
+                <span class="border border-gray-700 p-2 text-gray-500"><i class="fas fa-check text-highlight mr-1"></i> Linux</span>
+                <span class="border border-gray-700 p-2 text-gray-500"><i class="fas fa-check text-highlight mr-1"></i> Network</span>
+                <span class="border border-gray-700 p-2 text-gray-500"><i class="fas fa-check text-highlight mr-1"></i> AWS Cloud</span>
+                <span class="border border-gray-700 p-2 text-gray-500"><i class="fas fa-check text-highlight mr-1"></i> Ready</span>
+            </div>
+            <div class="splash-scanline h-1 bg-highlight mt-8"></div>
+        </div>
+        <div class="absolute bottom-6 left-6 right-6 flex justify-between font-mono text-[10px] text-gray-500 uppercase">
+            <span>Orbit Future Academy // AWS re/Start</span>
+            <span>ACCESS_GRANTED [ ]</span>
         </div>
     </div>
 
@@ -185,7 +256,7 @@
         <div class="flex items-center px-6 border-r-2 border-ink font-mono font-bold text-lg bg-white">
             NRP_LAB
         </div>
-        
+
         <div class="hidden md:flex flex-1 divide-x-2 divide-ink bg-white">
             <a href="#intro" class="flex items-center px-6 hover:bg-highlight hover:text-ink transition-colors duration-200 font-mono text-xs uppercase font-bold tracking-wider">01 // Intro</a>
             <a href="#specs" class="flex items-center px-6 hover:bg-highlight hover:text-ink transition-colors duration-200 font-mono text-xs uppercase font-bold tracking-wider">02 // Specs</a>
@@ -226,9 +297,10 @@
                     <div class="ui-btn-brutal cursor-default"><i class="fas fa-bolt mr-2"></i> SysAdmin</div>
                     <div class="ui-btn-brutal cursor-default"><i class="fas fa-network-wired mr-2"></i> DevOps</div>
                     <div class="ui-btn-brutal cursor-default"><i class="fas fa-network-wired mr-2"></i> Fullstack Web Dev</div>
+                    <div class="ui-btn-brutal cursor-default"><i class="fab fa-aws mr-2"></i> AWS Cloud</div>
                 </div>
             </div>
-            
+
             <div class="md:col-span-4 flex flex-col divide-y-2 divide-ink opacity-0-start content-reveal delay-200 bg-white">
                 <div class="flex-1 bg-gray-200 relative overflow-hidden group border-b-2 border-ink">
                     <img src="https://lh3.googleusercontent.com/a/ACg8ocKQuNor1xYocVKwjHaGfnpxxgTwWqh1Jt9xfQ7HV4KVp8-9efHeGg=s288-c-no" class="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700 ease-out" alt="Profile">
@@ -245,6 +317,10 @@
                             <span class="text-gray-500 font-bold">MAIN OS:</span>
                             <span class="font-bold">LINUX (ARCH)</span>
                         </li>
+                        <li class="flex justify-between items-center border-b border-gray-300 pb-2">
+                            <span class="text-gray-500 font-bold">TRAINING:</span>
+                            <span class="font-bold text-right">AWS re/START</span>
+                        </li>
                         <li class="flex justify-between items-center pt-1">
                             <span class="text-gray-500 font-bold">LOC:</span>
                             <span class="font-bold">IDN, KALIMANTAN</span>
@@ -260,6 +336,7 @@
                 <span class="mx-8"><i class="fas fa-sync"></i> ASSET_MANAGEMENT_ACTIVE</span>
                 <span class="mx-8"><i class="fas fa-box"></i> DOCKER_CONTAINERIZED</span>
                 <span class="mx-8"><i class="fas fa-cloud"></i> AWS_CLOUD_CONNECTED</span>
+                <span class="mx-8"><i class="fab fa-aws"></i> AWS_RESTART_COHORT_COMPLETE</span>
                 <span class="mx-8"><i class="fas fa-clock"></i> UPTIME: 99.9%</span>
             </div>
         </div>
@@ -270,7 +347,7 @@
                     Tech<br><span class="text-highlight">Specs</span>
                 </h2>
             </div>
-            
+
             <div class="md:col-span-10">
                 <div class="grid grid-cols-1 md:grid-cols-4 border-b-2 border-ink group hover:bg-gray-50 transition-colors duration-300">
                     <div class="md:col-span-1 p-6 border-b-2 md:border-b-0 md:border-r-2 border-ink bg-gray-100 font-black uppercase text-base flex items-center">01. Core Systems</div>
@@ -278,6 +355,8 @@
                         <div class="flex items-center gap-3"><i class="fab fa-windows text-lg"></i> Windows Server</div>
                         <div class="flex items-center gap-3"><i class="fab fa-linux text-lg"></i> Linux Server</div>
                         <div class="flex items-center gap-3"><i class="fas fa-terminal text-lg"></i> Bash Scripting</div>
+                        <div class="flex items-center gap-3"><i class="fab fa-python text-lg"></i> Python</div>
+                        <div class="flex items-center gap-3"><i class="fas fa-database text-lg"></i> Relational DB</div>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 border-b-2 border-ink group hover:bg-gray-50 transition-colors duration-300">
@@ -286,6 +365,7 @@
                         <div class="flex items-center gap-3"><i class="fas fa-router text-lg"></i> MikroTik RouterOS</div>
                         <div class="flex items-center gap-3"><i class="fab fa-aws text-lg"></i> AWS Cloud Net</div>
                         <div class="flex items-center gap-3"><i class="fas fa-shield-alt text-lg"></i> VLAN / VPN</div>
+                        <div class="flex items-center gap-3"><i class="fas fa-lock text-lg"></i> Cloud Security</div>
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 border-b-2 border-ink group hover:bg-gray-50 transition-colors duration-300">
@@ -302,6 +382,7 @@
                         <div class="flex items-center gap-3"><i class="fas fa-boxes text-lg"></i> IT Asset Mgmt</div>
                         <div class="flex items-center gap-3"><i class="fas fa-headset text-lg"></i> IT Helpdesk & Support</div>
                         <div class="flex items-center gap-3"><i class="fab fa-microsoft text-lg"></i> MS Office Suite</div>
+                        <div class="flex items-center gap-3"><i class="fas fa-list-check text-lg"></i> Project Management</div>
                     </div>
                 </div>
             </div>
@@ -313,8 +394,35 @@
                     Op<br><span class="text-white bg-ink px-1">Logs</span>
                 </h2>
             </div>
-            
+
             <div class="md:col-span-10">
+                <div class="grid grid-cols-1 md:grid-cols-12 border-b-2 border-ink group hover:bg-gray-50 transition-colors duration-300">
+                    <div class="md:col-span-3 p-6 font-mono text-xs border-b-2 md:border-b-0 md:border-r-2 border-ink text-gray-500 group-hover:text-ink">
+                        <span class="block text-xl font-black text-ink mb-1">MAR—JUN 2026</span>
+                        4 MOS · REMOTE
+                    </div>
+                    <div class="md:col-span-9 p-6">
+                        <div class="flex items-start gap-4 mb-3">
+                            <div class="shrink-0 w-12 h-12 border-2 border-ink bg-highlight flex items-center justify-center relative overflow-hidden" aria-label="Orbit Future Academy logo">
+                                <span class="absolute w-9 h-4 border-2 border-ink rounded-[50%] -rotate-45"></span>
+                                <span class="font-black text-xs relative">OFA</span>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-black uppercase leading-none mb-1 group-hover:text-highlight bg-ink text-white inline-block px-2 transition-colors">AWS re/Start Academy Cohort</h3>
+                                <div class="font-mono text-xs text-gray-600 font-bold mt-2">Orbit Future Academy · Internship</div>
+                            </div>
+                        </div>
+                        <p class="font-mono text-sm leading-relaxed text-gray-800 max-w-4xl">
+                            A 12-week competency-based training program covering technical skills in Cloud Computing (AWS Cloud Practitioner), Linux, Python, Networking, Security, and relational databases. The program also develops professional skills for job readiness in the technology industry.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-4 font-mono text-xs font-bold">
+                            <span class="border border-ink bg-highlight px-2 py-1"><i class="fab fa-aws mr-1"></i> Amazon Web Services (AWS)</span>
+                            <span class="border border-ink bg-white px-2 py-1"><i class="fas fa-list-check mr-1"></i> Project Management</span>
+                            <span class="border border-ink bg-white px-2 py-1"><i class="fas fa-cloud mr-1"></i> Cloud Computing</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-12 border-b-2 border-ink group hover:bg-gray-50 transition-colors duration-300">
                     <div class="md:col-span-3 p-6 font-mono text-xs border-b-2 md:border-b-0 md:border-r-2 border-ink text-gray-500 group-hover:text-ink">
                         <span class="block text-xl font-black text-ink mb-1">2024-25</span>
@@ -339,7 +447,7 @@
                     <div class="md:col-span-9 p-6">
                         <h3 class="text-2xl font-black uppercase mb-1 group-hover:text-highlight bg-ink text-white inline-block px-2 transition-colors">Diploma of Informatics Engineering</h3>
                         <div class="font-mono text-xs mb-4 text-gray-600 font-bold mt-1">@ Banjarmasin State Polytechnic</div>
-                        
+
                         <div class="flex items-center gap-4 mb-4">
                             <span class="border border-ink px-3 py-1 font-bold text-sm bg-highlight">GPA: 3.74 / 4.00</span>
                         </div>
@@ -355,13 +463,17 @@
         </section>
 
         <section class="grid grid-cols-1 md:grid-cols-2 divide-y-2 md:divide-y-0 md:divide-x-2 divide-ink border-t-2 border-ink bg-paper">
-            
+
             <div class="p-8 md:p-12">
                 <div class="flex items-center gap-2 mb-6">
                     <i class="fas fa-certificate text-2xl"></i>
                     <h3 class="text-2xl font-black uppercase">Certifications</h3>
                 </div>
                 <div class="space-y-4">
+                    <div class="bg-highlight border-2 border-ink p-4 shadow-[4px_4px_0px_#111] hover:translate-x-1 transition-transform">
+                        <h4 class="font-bold uppercase">AWS re/Start Academy Cohort</h4>
+                        <p class="font-mono text-xs text-gray-700">Orbit Future Academy · Mar 2026 — Jun 2026</p>
+                    </div>
                     <div class="bg-white border-2 border-ink p-4 shadow-[4px_4px_0px_#111] hover:translate-x-1 transition-transform">
                         <h4 class="font-bold uppercase"><a href="https://www.linkedin.com/in/noor-rizky-permana-965969269/">Junior Web Developer</a></h4>
                         <p class="font-mono text-xs text-gray-600">Issued by Digitalent</p>
@@ -379,7 +491,7 @@
                     <h3 class="text-2xl font-black uppercase">Languages</h3>
                 </div>
                 <div class="space-y-6 font-mono text-sm">
-                    
+
                     <div>
                         <div class="flex justify-between mb-1">
                             <span class="font-bold">INDONESIA</span>
@@ -503,7 +615,30 @@
         window.addEventListener('load', () => {
             const splash = document.getElementById('splash-screen');
             const contentElements = document.querySelectorAll('.content-reveal');
-            
+            const progress = document.getElementById('splash-progress');
+            const percent = document.getElementById('splash-percent');
+            const status = document.getElementById('splash-status');
+            const bootSteps = [
+                [18, 'CHECKING SYSTEM MODULES...'],
+                [42, 'MOUNTING NETWORK SERVICES...'],
+                [68, 'CONNECTING AWS CLOUD LAYER...'],
+                [86, 'LOADING PORTFOLIO ASSETS...'],
+                [100, 'SYSTEM READY // WELCOME']
+            ];
+            let bootIndex = 0;
+
+            const bootInterval = setInterval(() => {
+                const [value, message] = bootSteps[bootIndex];
+                progress.style.width = `${value}%`;
+                percent.innerText = `${String(value).padStart(2, '0')}%`;
+                status.innerText = message;
+                bootIndex += 1;
+
+                if (bootIndex === bootSteps.length) {
+                    clearInterval(bootInterval);
+                }
+            }, 360);
+
             setTimeout(() => {
                 splash.classList.add('splash-hidden');
                 document.body.classList.remove('loading');
@@ -523,7 +658,7 @@
             isMenuOpen = !isMenuOpen;
             if (isMenuOpen) {
                 mobileMenu.classList.remove('-translate-y-[150%]');
-                mobileMenu.classList.add('translate-y-[60px]'); 
+                mobileMenu.classList.add('translate-y-[60px]');
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-times');
             } else {
